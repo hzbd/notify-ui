@@ -22,7 +22,7 @@ $ git clone https://gitee.com/im623/notify_ui.git && \
     python pi_app.py
 ```
 
-## 远端API应返回JSON格式样例
+## 远端API应返回的JSON格式样例
 
 ```json
 {
