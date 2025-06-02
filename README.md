@@ -1,8 +1,6 @@
 # 桌面端状态通知 - Pi App
 
-![Demo](./screenshots/1.png)
-![Demo](./screenshots/2.png)
-![Demo](./screenshots/3.png)
+![Demo](./screenshot.png)
 
 
 Pi APP：任务跑完立马喊你，再也不用干等着！
