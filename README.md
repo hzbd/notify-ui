@@ -27,12 +27,12 @@ Pi APP：任务跑完立马喊你，再也不用干等着！
 ```sh
 # 初始化开发环境
 $ python3 -m venv ~/.pyenvs/py3 && \
-    source ~/.pyenvs/py3/bin/activate && \
-    pip install pyside6
+    source ~/.pyenvs/py3/bin/activate
 
 # 运行app
 $ git clone https://gitee.com/im623/notify_ui.git && \
     cd notify_ui && \
+    pip install -r requirements.txt && \
     python pi_app.py
 ```
 
