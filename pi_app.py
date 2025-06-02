@@ -556,8 +556,8 @@ class StatusBarApp(QObject):
         self.notification_received.connect(self.handle_notification)
 
         # 加载基础图标
-        self.base_icon_black = self.load_icon("pi_black.svg")
-        self.base_icon_orange = self.load_icon("pi_orange.svg")
+        self.base_icon_black = self.load_icon("media/pi_black.svg")
+        self.base_icon_orange = self.load_icon("media/pi_orange.svg")
         self.numbered_icons = {}
 
         self.tray_icon = QSystemTrayIcon(self.app)
@@ -687,7 +687,7 @@ class StatusBarApp(QObject):
             logging.warning("未找到 alarm.wav 文件，音效功能将不可用")
 
     def find_sound_file(self):
-        local_path = os.path.join(os.path.dirname(__file__), "alarm.wav")
+        local_path = os.path.join(os.path.dirname(__file__), "media/alarm.wav")
         if os.path.exists(local_path):
             return local_path
 
