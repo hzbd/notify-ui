@@ -556,8 +556,8 @@ class StatusBarApp(QObject):
         self.notification_received.connect(self.handle_notification)
 
         # 加载基础图标
-        self.base_icon_black = self.load_icon("media/pi_black.svg")
-        self.base_icon_orange = self.load_icon("media/pi_orange.svg")
+        self.base_icon_black = self.load_icon("media/pi-nomal.png")
+        self.base_icon_update = self.load_icon("media/pi-update.png")
         self.numbered_icons = {}
 
         self.tray_icon = QSystemTrayIcon(self.app)
@@ -720,7 +720,7 @@ class StatusBarApp(QObject):
         if count in self.numbered_icons:
             return self.numbered_icons[count]
 
-        base_icon = self.base_icon_orange if count > 0 else self.base_icon_black
+        base_icon = self.base_icon_update if count > 0 else self.base_icon_black
         pixmap = base_icon.pixmap(32, 32)
         if pixmap.isNull():
             return base_icon

@@ -1,2 +1,4 @@
 pyside6
 requests
+pyinstaller
+Pillow
