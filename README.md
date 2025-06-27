@@ -1,4 +1,4 @@
-# 桌面端状态通知 - Pi App
+# 桌面端状态通知App - NotifyPi
 
 ![Demo](./screenshot.png)
 
