@@ -28,6 +28,8 @@ from PySide6.QtMultimedia import QSoundEffect
 from datetime import datetime
 from functools import partial
 
+from _version import __version__
+
 class NotificationHandler(BaseHTTPRequestHandler):
     def _set_response(self, content_type="text/plain"):
         self.send_response(200)
@@ -529,6 +531,12 @@ class StatusBarApp(QObject):
     def __init__(self):
         super().__init__()
         self.app = QApplication(sys.argv)
+
+        self.app.setApplicationName("NotifyPI")
+        self.app.setApplicationDisplayName("NotifyPI")
+        self.app.setOrganizationName("dadoulab") # 与 bundle_identifier 里的公司名对应
+        self.app.setOrganizationDomain("com.dadoulab") # 与 bundle_identifier 对应
+
         self.app.setQuitOnLastWindowClosed(False)
         self.server = None
         self.server_thread = None
@@ -582,9 +590,18 @@ class StatusBarApp(QObject):
         self.mark_read_action = QAction("标记所有为已读", self.menu)
         self.mark_read_action.triggered.connect(self.mark_all_as_read)
 
+        self.about_action = QAction("关于 NotifyPI", self.menu)
+        self.about_action.triggered.connect(self.show_about_dialog)
+
+        self.feedback_action = QAction("问题反馈", self.menu)
+        self.feedback_action.triggered.connect(self.open_feedback_link)
+
         self.menu.addAction(self.settings_action)
         self.menu.addMenu(self.history_menu)
         self.menu.addAction(self.mark_read_action)
+        self.menu.addAction(self.about_action)
+        self.menu.addAction(self.feedback_action)
+
         self.menu.addSeparator()
         self.quit_action = QAction("退出", self.menu)
         self.quit_action.triggered.connect(self.quit)
@@ -715,6 +732,24 @@ class StatusBarApp(QObject):
             api_enabled = self.settings.value("api_enabled", False, type=bool)
             poll_interval = self.settings.value("poll_interval", 300, type=int)
             self.api_poller.update_polling_interval(api_enabled, poll_interval)
+
+    def show_about_dialog(self):
+        """显示关于对话框"""
+        QMessageBox.about(
+            None,  # Parent widget
+            "关于 NotifyPI",
+            f"""
+            <b>NotifyPI v{__version__}</b>
+            <p>NotifyPI 是一款开源的任务提醒App，可监控本地及远程服务器上的长时任务。任务完成时，将触发桌面弹窗与提示音，及时获知任务结束状态。</p>
+            <p>项目地址: <a href='https://github.com/hzbd/notify-ui'>https://github.com/hzbd/notify-ui</a></p>
+            """
+        )
+
+    def open_feedback_link(self):
+        """在默认浏览器中打开问题反馈的URL"""
+        from PySide6.QtGui import QDesktopServices
+        url = QUrl("https://github.com/hzbd/notify-ui/issues")
+        QDesktopServices.openUrl(url)
 
     def create_numbered_icon(self, count):
         if count in self.numbered_icons:

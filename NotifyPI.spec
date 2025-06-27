@@ -1,6 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
+
+sys.path.append(SPECPATH)
+
+from _version import __version__
+
+APP_VERSION = __version__
+APP_BUILD_NUM = __version__.replace('.', '')
+
 block_cipher = None
+
 
 a = Analysis(
     ['pi_app.py'],
@@ -32,7 +42,7 @@ exe = EXE(
     a.datas,
     [],
     exclude_binaries=True,
-    name='PiNotifier',
+    name='NotifyPI',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -51,15 +61,20 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='PiNotifier',
+    name='NotifyPI',
 )
 app = BUNDLE(
     coll,
-    name='PiNotifier.app',
+    name='NotifyPI.app',
     icon='media/pi-update.png',
-    bundle_identifier='com.dadoulab.pinotifier',
+    bundle_identifier='com.dadoulab.NotifyPI',
     info_plist={
         # 添加一些元数据到 Info.plist
+        'CFBundleName': 'NotifyPI',
+        'CFBundleDisplayName': 'NotifyPI',
+        'CFBundleExecutable': 'NotifyPI',
+        'CFBundleShortVersionString': APP_VERSION,
+        'CFBundleVersion': APP_BUILD_NUM,
         'NSHighResolutionCapable': 'True', # 支持高清屏
         'LSUIElement': 'True', # 将应用作为“代理应用”运行，不在 Dock 栏显示图标
     }
